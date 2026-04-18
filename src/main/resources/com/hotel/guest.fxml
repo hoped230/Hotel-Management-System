@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      spacing="12" styleClass="guest-root"
+      prefWidth="660" prefHeight="520">
+
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <!-- Top Bar -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Label fx:id="welcomeLabel" text="Welcome" styleClass="title-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="guestLogoutBtn" text="Logout" styleClass="secondary-btn"/>
+    </HBox>
+
+    <Label text="Available Rooms:" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+
+    <!-- Available Rooms Table -->
+    <TableView fx:id="availableTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Room #" prefWidth="100"/>
+            <TableColumn text="Type" prefWidth="150"/>
+            <TableColumn text="Price / Day" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <!-- Book Room Form — HBox -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Book a Room:" style="-fx-font-weight: bold;"/>
+        <TextField fx:id="bookRoomNumber" promptText="Room Number" prefWidth="120"/>
+        <TextField fx:id="bookDays" promptText="Number of Days" prefWidth="130"/>
+        <Button fx:id="bookBtn" text="Book Room" styleClass="success-btn"/>
+        <Label fx:id="statusLabel"/>
+    </HBox>
+
+    <!-- Action Buttons -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Button fx:id="viewBillBtn" text="View My Bill" styleClass="primary-btn"/>
+        <Button fx:id="guestCheckoutBtn" text="Checkout" styleClass="danger-btn"/>
+    </HBox>
+
+</VBox>

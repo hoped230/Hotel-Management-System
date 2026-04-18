@@ -1,0 +1,21 @@
+OSDL HOTEL MANAGEMENT
+Generated: 11-04-2026 15:27
+
+Booking ID: BKG-1775831282863
+Guest: Isheet
+Phone: 1234567891
+Room: 202 - DELUXE
+Stay: 2026-04-10 to 2026-04-11 (1 nights)
+
+Charge Item                        Amount
+---------------------------------------------
+Room 202 stay                     4300.00
+Breakfast x2                       500.00
+Laundry x2                         600.00
+Airport Pickup x2                 1800.00
+Spa x2                            2400.00
+Airport Pickup x2                 1800.00
+Airport Pickup x4                 3600.00
+Tax (12%)                         1800.00
+---------------------------------------------
+Grand Total                      16800.00

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hotel.osdl.controller.MainController"
+            prefHeight="760.0" prefWidth="1280.0" styleClass="root-pane">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="18.0" styleClass="top-bar">
+            <children>
+                <VBox spacing="6.0">
+                    <children>
+                        <Label styleClass="brand-title" text="Hotel Management System"/>
+                        <Label styleClass="brand-subtitle" text="JavaFX + Maven + File Storage Project"/>
+                    </children>
+                </VBox>
+                <StackPane HBox.hgrow="ALWAYS"/>
+                <Button mnemonicParsing="false" onAction="#handleRefresh" styleClass="ghost-button" text="Refresh Data"/>
+            </children>
+            <padding>
+                <Insets bottom="18.0" left="24.0" right="24.0" top="18.0"/>
+            </padding>
+        </HBox>
+    </top>
+    <center>
+        <HBox spacing="18.0">
+            <children>
+                <VBox prefWidth="350.0" spacing="16.0" styleClass="panel-card">
+                    <children>
+                        <Label styleClass="section-title" text="Booking Desk"/>
+                        <GridPane hgap="12.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="90.0"/>
+                                <ColumnConstraints minWidth="160.0" hgrow="ALWAYS"/>
+                            </columnConstraints>
+                            <children>
+                                <Label text="Guest Name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="guestNameField" promptText="Enter guest name" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Phone" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="phoneField" promptText="Phone number" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Email" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <TextField fx:id="emailField" promptText="Email address" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <Label text="Room Type" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                <ComboBox fx:id="roomTypeCombo" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <Label text="Room" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                <ComboBox fx:id="roomCombo" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                <Label text="Check In" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                                <DatePicker fx:id="checkInPicker" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                <Label text="Check Out" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                                <DatePicker fx:id="checkOutPicker" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                                <Label text="Adults" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                                <Spinner fx:id="adultsSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                                <Label text="Children" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                                <Spinner fx:id="childrenSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                            </children>
+                        </GridPane>
+                        <Separator/>
+                        <Label styleClass="section-title" text="Optional Services"/>
+                        <GridPane hgap="12.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="110.0"/>
+                                <ColumnConstraints minWidth="120.0" hgrow="ALWAYS"/>
+                            </columnConstraints>
+                            <children>
+                                <Label text="Breakfast" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <Spinner fx:id="breakfastSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Laundry" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <Spinner fx:id="laundrySpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Airport Pickup" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <Spinner fx:id="pickupSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <Label text="Spa" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                <Spinner fx:id="spaSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                            </children>
+                        </GridPane>
+                        <Button mnemonicParsing="false" onAction="#handleCreateBooking" styleClass="primary-button" text="Create Booking"/>
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                    </padding>
+                </VBox>
+                <VBox spacing="18.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <HBox spacing="14.0">
+                            <children>
+                                <VBox HBox.hgrow="ALWAYS" spacing="5.0" styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-label" text="Active Bookings"/>
+                                        <Label fx:id="activeBookingsLabel" styleClass="stat-value" text="0"/>
+                                    </children>
+                                </VBox>
+                                <VBox HBox.hgrow="ALWAYS" spacing="5.0" styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-label" text="Available Rooms"/>
+                                        <Label fx:id="availableRoomsLabel" styleClass="stat-value" text="0"/>
+                                    </children>
+                                </VBox>
+                                <VBox HBox.hgrow="ALWAYS" spacing="5.0" styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-label" text="Total Revenue"/>
+                                        <Label fx:id="revenueLabel" styleClass="stat-value" text="Rs.0.00"/>
+                                    </children>
+                                </VBox>
+                                <VBox HBox.hgrow="ALWAYS" spacing="5.0" styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-label" text="Room Mix"/>
+                                        <Label fx:id="roomMixLabel" styleClass="stat-small" text="Standard 0 | Deluxe 0 | Suite 0"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                        <Label fx:id="featureSummaryLabel" styleClass="info-label" text="Feature summary"/>
+                        <HBox spacing="18.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <VBox spacing="12.0" styleClass="panel-card" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="section-title" text="Booking Register"/>
+                                        <TableView fx:id="bookingTable" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="bookingIdColumn" prefWidth="160.0" text="Booking ID"/>
+                                                <TableColumn fx:id="guestColumn" prefWidth="150.0" text="Guest"/>
+                                                <TableColumn fx:id="roomColumn" prefWidth="90.0" text="Room"/>
+                                                <TableColumn fx:id="checkInColumn" prefWidth="110.0" text="Check In"/>
+                                                <TableColumn fx:id="checkOutColumn" prefWidth="110.0" text="Check Out"/>
+                                                <TableColumn fx:id="statusColumn" prefWidth="110.0" text="Status"/>
+                                            </columns>
+                                        </TableView>
+                                        <HBox spacing="10.0">
+                                            <children>
+                                                <ComboBox fx:id="serviceCombo" HBox.hgrow="ALWAYS"/>
+                                                <Spinner fx:id="serviceQtySpinner" editable="true" prefWidth="90.0"/>
+                                                <Button mnemonicParsing="false" onAction="#handleAddService" styleClass="secondary-button" text="Add Service"/>
+                                                <Button fx:id="checkoutButton" mnemonicParsing="false" onAction="#handleCheckout" styleClass="warning-button" text="Check Out"/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                    </padding>
+                                </VBox>
+                                <VBox prefWidth="360.0" spacing="12.0" styleClass="panel-card">
+                                    <children>
+                                        <Label styleClass="section-title" text="Bill Preview"/>
+                                        <TextArea fx:id="billPreviewArea" editable="false" wrapText="true" VBox.vgrow="ALWAYS"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="0.0"/>
+            </padding>
+        </HBox>
+    </center>
+</BorderPane>

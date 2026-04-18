@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Manipal - Code Explanation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; color: #333; line-height: 1.7; }
+        .header { background: #1a237e; color: white; padding: 28px 40px; }
+        .header h1 { font-size: 26px; }
+        .header p { color: #b0bec5; font-size: 13px; margin-top: 4px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 25px 20px 60px; }
+        h2 { color: #1a237e; font-size: 20px; margin: 35px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #c5cae9; }
+        h3 { color: #283593; font-size: 16px; margin: 22px 0 8px; }
+        p { margin: 6px 0; font-size: 14px; }
+        code { background: #eceff1; padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: Consolas, monospace; }
+        pre { background: #263238; color: #e0e0e0; padding: 16px 20px; border-radius: 6px; font-size: 12.5px; font-family: Consolas, monospace; overflow-x: auto; margin: 10px 0 16px; line-height: 1.6; }
+        pre .kw { color: #c792ea; }           /* keywords */
+        pre .type { color: #ffcb6b; }         /* types/classes */
+        pre .str { color: #c3e88d; }          /* strings */
+        pre .cmt { color: #78909c; }          /* comments */
+        pre .num { color: #f78c6c; }          /* numbers */
+        pre .ann { color: #89ddff; }          /* annotations */
+        .box { background: white; border-radius: 6px; padding: 18px 22px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #3f51b5; }
+        .box-green { border-left-color: #2e7d32; }
+        .box-orange { border-left-color: #e65100; }
+        .box-red { border-left-color: #c62828; }
+        .box-purple { border-left-color: #7b1fa2; }
+        .box h4 { color: #1a237e; font-size: 14px; margin-bottom: 6px; }
+        .box-green h4 { color: #2e7d32; }
+        .box-orange h4 { color: #e65100; }
+        .box-red h4 { color: #c62828; }
+        .box-purple h4 { color: #7b1fa2; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; margin: 0 2px; }
+        .t-blue { background: #e3f2fd; color: #1565c0; }
+        .t-green { background: #e8f5e9; color: #2e7d32; }
+        .t-orange { background: #fff3e0; color: #e65100; }
+        .t-red { background: #fce4ec; color: #c62828; }
+        .t-purple { background: #f3e5f5; color: #7b1fa2; }
+        .t-gray { background: #eceff1; color: #546e7a; }
+        .analogy { background: #e8f5e9; padding: 12px 16px; border-radius: 6px; margin: 8px 0; font-size: 13px; }
+        .analogy::before { content: "Think of it like: "; font-weight: bold; color: #2e7d32; }
+        .flow { background: white; padding: 16px 20px; border-radius: 6px; font-size: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin: 10px 0; }
+        .flow .step { display: inline-block; background: #e8eaf6; padding: 4px 12px; border-radius: 4px; margin: 3px 4px; font-size: 13px; }
+        .flow .arrow { color: #1a237e; font-weight: bold; margin: 0 2px; }
+        ul { margin: 6px 0 6px 20px; font-size: 14px; }
+        li { margin: 3px 0; }
+        .divider { border: none; border-top: 1px dashed #cfd8dc; margin: 25px 0; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>HotelManagementSystem.java &mdash; Code Explained</h1>
+    <p>A simple breakdown of what each part of the code does, written for easy understanding</p>
+</div>
+
+<div class="container">
+
+<!-- ============================== OVERVIEW ============================== -->
+<h2>Overview: What This File Contains</h2>
+
+<p>The entire application is in <strong>one Java file</strong>. It has <strong>15 classes/interfaces</strong> organized in this order:</p>
+
+<div class="flow">
+    <span class="step">Enums (RoomType, RoomStatus)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Interfaces (Billable, Displayable)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Abstract Room class</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Room subclasses (Standard, Deluxe, Suite)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">DataStore (Generics)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Bill (Wrappers)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">BookingQueue (Threading)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">FileManager (File I/O)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Hotel (Collections)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">HotelManagementSystem (JavaFX App)</span>
+</div>
+
+<div class="analogy">A restaurant. The enums are the menu. The Room classes are the tables. The Hotel class is the manager. FileManager is the record book. And HotelManagementSystem is the front desk that customers interact with.</div>
+
+<!-- ============================== ENUMS ============================== -->
+<h2>1. Enums &mdash; RoomType &amp; RoomStatus</h2>
+
+<div class="box">
+<h4>What is an Enum?</h4>
+<p>An enum is a fixed set of constants. Instead of writing <code>"Standard"</code> or <code>"Deluxe"</code> as strings (which you could misspell), you define them as enum values that the compiler enforces.</p>
+</div>
+
+<pre><span class="kw">enum</span> <span class="type">RoomType</span> {
+    <span class="str">STANDARD</span>(<span class="str">"Standard"</span>, <span class="num">1500.0</span>),   <span class="cmt">// Each constant has a name and price</span>
+    <span class="str">DELUXE</span>(<span class="str">"Deluxe"</span>, <span class="num">3000.0</span>),
+    <span class="str">SUITE</span>(<span class="str">"Suite"</span>, <span class="num">5000.0</span>);
+
+    <span class="kw">private final</span> String displayName;
+    <span class="kw">private final</span> <span class="kw">double</span> pricePerDay;
+
+    <span class="cmt">// Enum constructor — called once for each constant</span>
+    <span class="type">RoomType</span>(String displayName, <span class="kw">double</span> pricePerDay) { ... }
+
+    <span class="cmt">// Enum methods — called like RoomType.DELUXE.getPricePerDay()</span>
+    <span class="kw">public double</span> getPricePerDay() { <span class="kw">return</span> pricePerDay; }
+}
+
+<span class="kw">enum</span> <span class="type">RoomStatus</span> { AVAILABLE, OCCUPIED }  <span class="cmt">// Simple enum, no fields</span></pre>
+
+<p><strong>How it's used:</strong> When creating a room, you say <code>RoomType.DELUXE</code> instead of a string. To get the price, you call <code>RoomType.DELUXE.getPricePerDay()</code> which returns <code>3000.0</code>.</p>
+
+<!-- ============================== INTERFACES ============================== -->
+<h2>2. Interfaces &mdash; Billable &amp; Displayable</h2>
+
+<div class="box box-green">
+<h4>What is an Interface?</h4>
+<p>An interface is a <strong>contract</strong>. It says "any class that implements me MUST have these methods." The interface doesn't say HOW to do it &mdash; just WHAT must exist.</p>
+</div>
+
+<pre><span class="kw">interface</span> <span class="type">Billable</span> {
+    <span class="kw">double</span> calculateBill();     <span class="cmt">// Any Billable class must have this</span>
+    String getBillDetails();   <span class="cmt">// And this</span>
+}
+
+<span class="kw">interface</span> <span class="type">Displayable</span> {
+    String getDisplayInfo();   <span class="cmt">// Any Displayable class must have this</span>
+}</pre>
+
+<p><strong>Who implements them:</strong> The <code>Room</code> class implements both. So every room MUST have <code>calculateBill()</code>, <code>getBillDetails()</code>, and <code>getDisplayInfo()</code> methods.</p>
+
+<!-- ============================== ABSTRACT ROOM ============================== -->
+<h2>3. Abstract Class &mdash; Room</h2>
+
+<div class="box box-orange">
+<h4>What is an Abstract Class?</h4>
+<p>An abstract class is a <strong>blueprint</strong> that can't be used directly. You can't write <code>new Room(101, ...)</code>. You MUST create a <code>StandardRoom</code>, <code>DeluxeRoom</code>, or <code>SuiteRoom</code> instead. It defines common fields and methods that all rooms share.</p>
+</div>
+
+<pre><span class="kw">abstract class</span> <span class="type">Room</span> <span class="kw">implements</span> Serializable, Billable, Displayable {
+
+    <span class="cmt">// ENCAPSULATION — fields are private, accessed via getters</span>
+    <span class="kw">private int</span> roomNumber;
+    <span class="kw">private</span> RoomType roomType;
+    <span class="kw">private</span> RoomStatus status;
+    <span class="kw">private</span> String guestName;
+    <span class="kw">private</span> String guestPhone;
+    <span class="kw">private int</span> daysBooked;
+
+    <span class="cmt">// CONSTRUCTOR — sets up a new room</span>
+    Room(<span class="kw">int</span> roomNumber, RoomType roomType) {
+        <span class="kw">this</span>.roomNumber = roomNumber;  <span class="cmt">// 'this' refers to the current object</span>
+        <span class="kw">this</span>.roomType = roomType;
+        <span class="kw">this</span>.status = RoomStatus.AVAILABLE;
+    }
+
+    <span class="cmt">// CONSTRUCTOR OVERLOADING — same name, different parameters</span>
+    Room(<span class="kw">int</span> roomNumber, RoomType roomType, String guestName, ...) {
+        <span class="kw">this</span>(roomNumber, roomType);  <span class="cmt">// calls the first constructor</span>
+        <span class="kw">this</span>.guestName = guestName;
+    }
+
+    <span class="cmt">// GETTERS — public access to private fields</span>
+    <span class="kw">public int</span> getRoomNumber() { <span class="kw">return</span> roomNumber; }
+
+    <span class="cmt">// METHOD OVERLOADING — two versions of bookRoom</span>
+    <span class="kw">public void</span> bookRoom(String name, String phone) {
+        bookRoom(name, phone, <span class="num">1</span>);  <span class="cmt">// default 1 day</span>
+    }
+    <span class="kw">public void</span> bookRoom(String name, String phone, <span class="kw">int</span> days) {
+        <span class="kw">this</span>.status = RoomStatus.OCCUPIED;
+        <span class="kw">this</span>.guestName = name;
+        ...
+    }
+
+    <span class="cmt">// ABSTRACT METHOD — subclasses MUST implement this</span>
+    <span class="kw">abstract double</span> getServiceCharge();
+
+    <span class="cmt">// POLYMORPHISM — this method can be overridden by subclasses</span>
+    <span class="ann">@Override</span>
+    <span class="kw">public double</span> calculateBill() {
+        <span class="kw">return</span> roomType.getPricePerDay() * daysBooked + getServiceCharge();
+    }
+}</pre>
+
+<div class="analogy">A form template. The Room class is like a blank hotel registration form. It has all the fields (room number, guest name, etc.) but you need a specific type (Standard/Deluxe/Suite) to actually fill it out.</div>
+
+<p><strong>Key OOP concepts here:</strong></p>
+<ul>
+    <li><strong>Encapsulation:</strong> Fields are <code>private</code>, only accessible through <code>getters</code> &mdash; outsiders can't change room data directly</li>
+    <li><strong><code>this</code> keyword:</strong> Refers to "this current object" &mdash; used when parameter names match field names</li>
+    <li><strong>Method Overloading:</strong> Two <code>bookRoom()</code> methods with different parameters</li>
+    <li><strong>Abstract method:</strong> <code>getServiceCharge()</code> has no body &mdash; each subclass defines its own</li>
+    <li><strong>Serializable:</strong> Lets us save Room objects to a file</li>
+</ul>
+
+<!-- ============================== SUBCLASSES ============================== -->
+<h2>4. Room Subclasses &mdash; Standard, Deluxe, Suite</h2>
+
+<div class="box box-green">
+<h4>What is Inheritance?</h4>
+<p>These classes <strong>extend</strong> Room, meaning they inherit all of Room's fields and methods, but can add their own behavior. This is the "is-a" relationship: a DeluxeRoom IS A Room.</p>
+</div>
+
+<pre><span class="kw">class</span> <span class="type">StandardRoom</span> <span class="kw">extends</span> Room {
+    StandardRoom(<span class="kw">int</span> roomNumber) {
+        <span class="kw">super</span>(roomNumber, RoomType.STANDARD);  <span class="cmt">// 'super' calls parent constructor</span>
+    }
+
+    <span class="ann">@Override</span>
+    <span class="kw">double</span> getServiceCharge() { <span class="kw">return</span> <span class="num">0</span>; }  <span class="cmt">// No extra charge</span>
+
+    <span class="ann">@Override</span>
+    <span class="kw">public</span> String getDisplayInfo() {
+        <span class="kw">return super</span>.getDisplayInfo() + <span class="str">" - Basic"</span>;  <span class="cmt">// super.method() calls parent's version</span>
+    }
+}
+
+<span class="kw">class</span> <span class="type">DeluxeRoom</span> <span class="kw">extends</span> Room {
+    <span class="kw">private double</span> extraCharge = <span class="num">500.0</span>;
+
+    <span class="ann">@Override</span>
+    <span class="kw">double</span> getServiceCharge() { <span class="kw">return</span> extraCharge; }  <span class="cmt">// Rs. 500 extra</span>
+}
+
+<span class="kw">class</span> <span class="type">SuiteRoom</span> <span class="kw">extends</span> Room {
+    <span class="kw">private double</span> discountRate = <span class="num">0.10</span>;
+
+    <span class="ann">@Override</span>
+    <span class="kw">double</span> getServiceCharge() {
+        <span class="kw">return</span> -(getPricePerDay() * getDaysBooked() * discountRate);  <span class="cmt">// 10% discount (negative charge)</span>
+    }
+}</pre>
+
+<p><strong>This is Polymorphism in action:</strong> When <code>calculateBill()</code> is called, it calls <code>getServiceCharge()</code> &mdash; but the <em>actual</em> method that runs depends on which type of room it is. StandardRoom returns 0, DeluxeRoom returns 500, SuiteRoom returns a negative number (discount).</p>
+
+<!-- ============================== GENERICS ============================== -->
+<h2>5. DataStore &mdash; Generics</h2>
+
+<div class="box box-purple">
+<h4>What are Generics?</h4>
+<p>Generics let you write a class that works with <strong>any type</strong>. Instead of writing separate <code>RoomStore</code>, <code>BillStore</code>, etc., you write ONE <code>DataStore&lt;T&gt;</code> that works with any type T.</p>
+</div>
+
+<pre><span class="kw">class</span> <span class="type">DataStore</span>&lt;<span class="type">T</span> <span class="kw">extends</span> Serializable&gt; {  <span class="cmt">// T can be ANY Serializable type</span>
+    <span class="kw">private</span> List&lt;T&gt; items = <span class="kw">new</span> ArrayList&lt;&gt;();
+
+    <span class="kw">public void</span> add(T item) { items.add(item); }
+    <span class="kw">public</span> T get(<span class="kw">int</span> index) { <span class="kw">return</span> items.get(index); }
+    <span class="kw">public int</span> size() { <span class="kw">return</span> items.size(); }
+
+    <span class="cmt">// Generic method — U can be any Number type (Integer, Double, etc.)</span>
+    <span class="kw">public static</span> &lt;<span class="type">U</span> <span class="kw">extends</span> Number&gt; <span class="kw">double</span> sum(List&lt;U&gt; numbers) {
+        <span class="kw">double</span> total = <span class="num">0</span>;
+        <span class="kw">for</span> (U num : numbers) total += num.doubleValue();
+        <span class="kw">return</span> total;
+    }
+}</pre>
+
+<p><strong>How it's used:</strong></p>
+<ul>
+    <li><code>DataStore&lt;Bill&gt; billHistory = new DataStore&lt;&gt;()</code> &mdash; stores Bill objects</li>
+    <li><code>DataStore.sum(listOfDoubles)</code> &mdash; generic method adds up any list of numbers</li>
+    <li><code>&lt;T extends Serializable&gt;</code> is a <strong>bounded type</strong> &mdash; T must be Serializable</li>
+</ul>
+
+<!-- ============================== BILL ============================== -->
+<h2>6. Bill &mdash; Wrapper Classes</h2>
+
+<div class="box box-red">
+<h4>What are Wrapper Classes?</h4>
+<p>Java has primitive types (<code>int</code>, <code>double</code>, <code>boolean</code>, <code>char</code>) and their object equivalents (<code>Integer</code>, <code>Double</code>, <code>Boolean</code>, <code>Character</code>). The Bill class uses wrapper classes to demonstrate boxing/unboxing.</p>
+</div>
+
+<pre><span class="kw">class</span> <span class="type">Bill</span> {
+    <span class="kw">private</span> <span class="type">Integer</span> roomNumber;      <span class="cmt">// Integer instead of int</span>
+    <span class="kw">private</span> <span class="type">Double</span> baseAmount;       <span class="cmt">// Double instead of double</span>
+    <span class="kw">private</span> <span class="type">Double</span> totalAmount;
+    <span class="kw">private</span> <span class="type">Boolean</span> isPaid;          <span class="cmt">// Boolean instead of boolean</span>
+    <span class="kw">private</span> <span class="type">Character</span> roomCategory;  <span class="cmt">// Character instead of char</span>
+
+    Bill(Room room) {
+        <span class="cmt">// AUTOBOXING: primitive → Wrapper (automatic)</span>
+        <span class="kw">this</span>.roomNumber = room.getRoomNumber();  <span class="cmt">// int → Integer</span>
+        <span class="kw">this</span>.isPaid = <span class="kw">false</span>;                      <span class="cmt">// boolean → Boolean</span>
+
+        <span class="kw">this</span>.taxAmount = baseAmount * <span class="num">0.12</span>;       <span class="cmt">// 12% GST</span>
+        <span class="kw">this</span>.totalAmount = baseAmount + serviceCharge + taxAmount;
+    }
+
+    <span class="cmt">// UNBOXING: Wrapper → primitive (automatic)</span>
+    <span class="kw">public int</span> getRoomNum() { <span class="kw">return</span> roomNumber; }  <span class="cmt">// Integer → int</span>
+    <span class="kw">public boolean</span> paid() { <span class="kw">return</span> isPaid; }       <span class="cmt">// Boolean → boolean</span>
+
+    <span class="cmt">// BOXING: explicit Wrapper usage</span>
+    <span class="kw">public void</span> markPaid() { isPaid = <span class="type">Boolean</span>.TRUE; }
+}</pre>
+
+<p><strong>Bill calculation:</strong> Base amount (price &times; days) + service charge (varies by room type) + 12% GST tax = total.</p>
+
+<!-- ============================== BOOKING QUEUE ============================== -->
+<h2>7. BookingQueue &mdash; Producer-Consumer Pattern</h2>
+
+<div class="box box-orange">
+<h4>What is Producer-Consumer?</h4>
+<p>One thread (producer) adds items to a queue. Another thread (consumer) takes items out and processes them. <code>wait()</code> pauses a thread until something happens. <code>notify()</code> wakes up a waiting thread.</p>
+</div>
+
+<pre><span class="kw">class</span> <span class="type">BookingQueue</span> {
+    <span class="kw">private final</span> Queue&lt;BookingRequest&gt; queue = <span class="kw">new</span> LinkedList&lt;&gt;();
+
+    <span class="cmt">// PRODUCER — adds a booking request</span>
+    <span class="kw">public void</span> addRequest(BookingRequest request) <span class="kw">throws</span> InterruptedException {
+        <span class="kw">synchronized</span> (<span class="kw">this</span>) {       <span class="cmt">// SYNCHRONIZED BLOCK — only one thread at a time</span>
+            <span class="kw">while</span> (queue.size() >= MAX)
+                wait();             <span class="cmt">// WAIT — pause until space available</span>
+            queue.add(request);
+            notify();               <span class="cmt">// NOTIFY — wake up the consumer</span>
+        }
+    }
+
+    <span class="cmt">// CONSUMER — takes a booking request</span>
+    <span class="kw">public synchronized</span> BookingRequest getRequest() <span class="kw">throws</span> InterruptedException {
+        <span class="kw">while</span> (queue.isEmpty())     <span class="cmt">// SYNCHRONIZED METHOD</span>
+            wait();                 <span class="cmt">// WAIT — pause until something is added</span>
+        BookingRequest r = queue.poll();
+        notify();                   <span class="cmt">// NOTIFY — wake up the producer</span>
+        <span class="kw">return</span> r;
+    }
+}</pre>
+
+<div class="analogy">A restaurant kitchen. The waiter (producer) puts order slips in the queue. The chef (consumer) picks them up and cooks. If the queue is full, the waiter waits. If the queue is empty, the chef waits.</div>
+
+<!-- ============================== FILE MANAGER ============================== -->
+<h2>8. FileManager &mdash; File I/O &amp; Serialization</h2>
+
+<div class="box">
+<h4>What does FileManager do?</h4>
+<p>It handles ALL file operations. It saves room data so it persists after you close the app, writes activity logs, and stores records. It demonstrates every type of file handling in Java.</p>
+</div>
+
+<h3>8.1 Serialization (saving objects to a file)</h3>
+<pre><span class="cmt">// SAVE — converts Java objects to bytes and writes to hotel_data.dat</span>
+<span class="kw">public static void</span> saveData(ArrayList&lt;Room&gt; rooms, HashMap&lt;String, Room&gt; map) {
+    <span class="kw">try</span> (ObjectOutputStream oos = <span class="kw">new</span> ObjectOutputStream(
+            <span class="kw">new</span> FileOutputStream(<span class="str">"hotel_data.dat"</span>))) {  <span class="cmt">// TRY-WITH-RESOURCES</span>
+        oos.writeObject(rooms);   <span class="cmt">// Serialize the ArrayList of rooms</span>
+        oos.writeObject(map);     <span class="cmt">// Serialize the HashMap</span>
+    } <span class="kw">catch</span> (IOException e) { ... }
+}
+
+<span class="cmt">// LOAD — reads bytes from file and converts back to Java objects</span>
+<span class="kw">public static</span> Object[] loadData() {
+    <span class="kw">try</span> (ObjectInputStream ois = <span class="kw">new</span> ObjectInputStream(
+            <span class="kw">new</span> FileInputStream(<span class="str">"hotel_data.dat"</span>))) {  <span class="cmt">// DESERIALIZATION</span>
+        ArrayList&lt;Room&gt; rooms = (ArrayList&lt;Room&gt;) ois.readObject();
+        ...
+    }
+}</pre>
+
+<h3>8.2 Character Streams (text files)</h3>
+<pre><span class="cmt">// WRITE to a text log file — FileWriter, Character Stream, APPENDING</span>
+<span class="kw">public static void</span> appendLog(String message) {
+    <span class="kw">try</span> (FileWriter fw = <span class="kw">new</span> FileWriter(<span class="str">"hotel_log.txt"</span>, <span class="kw">true</span>)) {  <span class="cmt">// true = APPEND MODE</span>
+        fw.write(message + <span class="str">"\n"</span>);
+    }
+}
+
+<span class="cmt">// READ a text log file — FileReader, reads one character at a time</span>
+<span class="kw">public static</span> String readLog() {
+    <span class="kw">try</span> (FileReader fr = <span class="kw">new</span> FileReader(<span class="str">"hotel_log.txt"</span>)) {
+        <span class="kw">int</span> ch;
+        <span class="kw">while</span> ((ch = fr.read()) != -<span class="num">1</span>) sb.append((<span class="kw">char</span>) ch);
+    }
+}</pre>
+
+<h3>8.3 RandomAccessFile (jump to any position in a file)</h3>
+<pre><span class="cmt">// Write — jumps to the END of file, then writes</span>
+<span class="kw">try</span> (RandomAccessFile raf = <span class="kw">new</span> RandomAccessFile(<span class="str">"records.dat"</span>, <span class="str">"rw"</span>)) {
+    raf.seek(raf.length());   <span class="cmt">// SEEK to end</span>
+    raf.writeUTF(record);
+}
+
+<span class="cmt">// Read — jumps to the BEGINNING, then reads everything</span>
+    raf.seek(<span class="num">0</span>);               <span class="cmt">// SEEK to beginning</span>
+    <span class="kw">while</span> (raf.getFilePointer() < raf.length())
+        sb.append(raf.readUTF());</pre>
+
+<h3>8.4 Byte Streams with try-catch-finally</h3>
+<pre><span class="cmt">// Old style — NOT using try-with-resources</span>
+FileOutputStream fos = <span class="kw">null</span>;
+<span class="kw">try</span> {
+    fos = <span class="kw">new</span> FileOutputStream(filename);
+    fos.write(data);
+} <span class="kw">catch</span> (IOException e) {
+    System.out.println(<span class="str">"Error"</span>);
+} <span class="kw">finally</span> {                 <span class="cmt">// FINALLY — always runs, even if error occurs</span>
+    <span class="kw">if</span> (fos != <span class="kw">null</span>) fos.close();
+}</pre>
+
+<p><strong>Summary of file types:</strong></p>
+<ul>
+    <li><code>hotel_data.dat</code> &mdash; serialized room objects (permanent storage)</li>
+    <li><code>hotel_log.txt</code> &mdash; text log of all actions (character stream)</li>
+    <li><code>hotel_records.dat</code> &mdash; booking/checkout records (RandomAccessFile)</li>
+</ul>
+
+<!-- ============================== HOTEL ============================== -->
+<h2>9. Hotel &mdash; Collections &amp; Business Logic</h2>
+
+<div class="box">
+<h4>What does the Hotel class do?</h4>
+<p>This is the <strong>brain</strong> of the application. It manages rooms, handles bookings and checkouts, and stores data. It uses ArrayList, HashMap, Iterator, and Collections.sort().</p>
+</div>
+
+<pre><span class="kw">class</span> <span class="type">Hotel</span> {
+    <span class="kw">private final</span> ArrayList&lt;Room&gt; rooms = <span class="kw">new</span> ArrayList&lt;&gt;();           <span class="cmt">// List of all rooms</span>
+    <span class="kw">private final</span> HashMap&lt;String, Room&gt; phoneToRoom = <span class="kw">new</span> HashMap&lt;&gt;(); <span class="cmt">// Phone → Room mapping</span>
+
+    <span class="cmt">// BOOKING — synchronized so two threads can't book same room</span>
+    <span class="kw">public synchronized</span> String bookRoom(<span class="kw">int</span> roomNumber, String name, ...) {
+        <span class="kw">for</span> (Room room : rooms) {  <span class="cmt">// FOR-EACH loop</span>
+            <span class="kw">if</span> (room.getRoomNumber() == roomNumber) {
+                <span class="kw">if</span> (room.isOccupied()) <span class="kw">return</span> <span class="str">"Room is already occupied!"</span>;
+                <span class="kw">if</span> (phoneToRoom.containsKey(phone)) <span class="kw">return</span> <span class="str">"Already booked!"</span>;  <span class="cmt">// .containsKey()</span>
+                room.bookRoom(name, phone, days);
+                phoneToRoom.put(phone, room);  <span class="cmt">// .put() — add to HashMap</span>
+
+                <span class="cmt">// INSTANCEOF + TYPE CASTING</span>
+                <span class="kw">if</span> (room <span class="kw">instanceof</span> DeluxeRoom) {
+                    DeluxeRoom dr = (DeluxeRoom) room;  <span class="cmt">// cast Room → DeluxeRoom</span>
+                    ...
+                }
+                saveData();
+                <span class="kw">return</span> <span class="str">"Booked!"</span>;
+            }
+        }
+    }
+
+    <span class="cmt">// CHECKOUT — uses Iterator</span>
+    <span class="kw">public synchronized</span> String checkoutRoom(<span class="kw">int</span> roomNumber) {
+        Iterator&lt;Room&gt; iterator = rooms.iterator();  <span class="cmt">// ITERATOR</span>
+        <span class="kw">while</span> (iterator.hasNext()) {
+            Room room = iterator.next();
+            ...
+            phoneToRoom.remove(phone);  <span class="cmt">// .remove()</span>
+        }
+    }
+
+    <span class="cmt">// ADD ROOM — uses add() and Collections.sort()</span>
+    <span class="kw">public</span> String addRoom(<span class="kw">int</span> roomNumber, RoomType type) {
+        rooms.add(room);                 <span class="cmt">// .add()</span>
+        Collections.sort(rooms, ...);    <span class="cmt">// SORT rooms by number</span>
+    }
+
+    <span class="cmt">// REVERSE SORT</span>
+    <span class="kw">public</span> List&lt;Room&gt; getRoomsSortedReverse() {
+        Collections.sort(sorted, Collections.reverseOrder(...));  <span class="cmt">// REVERSE ORDER</span>
+    }
+}</pre>
+
+<p><strong>Collections methods used:</strong> <code>add()</code>, <code>remove()</code>, <code>get()</code>, <code>set()</code>, <code>size()</code>, <code>containsKey()</code>, <code>put()</code>, <code>Iterator</code>, <code>for-each</code>, <code>Collections.sort()</code>, <code>Collections.reverseOrder()</code>.</p>
+
+<!-- ============================== JAVAFX APP ============================== -->
+<h2>10. HotelManagementSystem &mdash; The JavaFX Application</h2>
+
+<div class="box box-purple">
+<h4>What does this class do?</h4>
+<p>This is the <strong>main class</strong> that creates the GUI (graphical user interface). It extends <code>Application</code> (required for JavaFX), creates all the screens (login, admin, guest), and handles user interactions.</p>
+</div>
+
+<h3>10.1 Application Startup</h3>
+<pre><span class="kw">public class</span> <span class="type">HotelManagementSystem</span> <span class="kw">extends</span> Application {
+
+    <span class="kw">private final</span> Hotel hotel = <span class="kw">new</span> Hotel();  <span class="cmt">// Create the hotel</span>
+    <span class="kw">private</span> Stage primaryStage;               <span class="cmt">// The main window</span>
+
+    <span class="ann">@Override</span>
+    <span class="kw">public void</span> start(Stage stage) {
+        <span class="kw">this</span>.primaryStage = stage;
+
+        <span class="cmt">// Add default rooms if database is empty</span>
+        <span class="kw">if</span> (hotel.getAllRooms().isEmpty()) {
+            hotel.addRoom(<span class="num">101</span>, RoomType.STANDARD);
+            hotel.addRoom(<span class="num">201</span>, RoomType.DELUXE);
+            ...
+        }
+
+        startBookingProcessor();         <span class="cmt">// Start background thread</span>
+        showLoginScreen();               <span class="cmt">// Show the first screen</span>
+
+        stage.setOnCloseRequest(e -> {
+            bookingProcessor.join(<span class="num">2000</span>); <span class="cmt">// JOIN — wait for thread to stop</span>
+        });
+
+        stage.show();                    <span class="cmt">// Display the window</span>
+    }
+}</pre>
+
+<h3>10.2 Background Thread (Multithreading)</h3>
+<pre><span class="kw">private void</span> startBookingProcessor() {
+    <span class="cmt">// RUNNABLE INTERFACE — defines what the thread does</span>
+    Runnable processor = () -> {         <span class="cmt">// LAMBDA EXPRESSION</span>
+        <span class="kw">while</span> (running) {               <span class="cmt">// run() method body</span>
+            <span class="kw">if</span> (!hotel.getBookingQueue().isEmpty()) {
+                BookingRequest req = hotel.getBookingQueue().getRequest();
+                hotel.bookRoom(...);
+                Thread.yield();          <span class="cmt">// YIELD — let other threads run</span>
+            }
+            Thread.sleep(<span class="num">500</span>);           <span class="cmt">// SLEEP — pause for 500ms</span>
+        }
+    };
+
+    bookingProcessor = <span class="kw">new</span> Thread(processor);  <span class="cmt">// THREAD CLASS</span>
+    bookingProcessor.setDaemon(<span class="kw">true</span>);          <span class="cmt">// Dies when app closes</span>
+    bookingProcessor.start();                  <span class="cmt">// START — begin running</span>
+}</pre>
+
+<h3>10.3 Login Screen</h3>
+<pre><span class="kw">private void</span> showLoginScreen() {
+    <span class="cmt">// Create UI components</span>
+    Label hotelName = <span class="kw">new</span> Label(<span class="str">"HOTEL MANIPAL"</span>);       <span class="cmt">// LABEL</span>
+    TextField userField = <span class="kw">new</span> TextField();              <span class="cmt">// TEXT FIELD</span>
+    PasswordField passField = <span class="kw">new</span> PasswordField();      <span class="cmt">// PASSWORD FIELD</span>
+    Button adminBtn = <span class="kw">new</span> Button(<span class="str">"Login as Admin"</span>);      <span class="cmt">// BUTTON</span>
+
+    <span class="cmt">// EVENT HANDLING — what happens when button is clicked</span>
+    adminBtn.setOnAction(e -> {                          <span class="cmt">// setOnAction + LAMBDA</span>
+        <span class="kw">if</span> (userField.getText().equals(<span class="str">"admin"</span>)) {
+            showAdminPanel();                            <span class="cmt">// Switch to admin screen</span>
+        } <span class="kw">else</span> {
+            showAlert(ERROR, <span class="str">"Invalid credentials!"</span>);
+        }
+    });
+
+    <span class="cmt">// LAYOUTs</span>
+    VBox adminCard = <span class="kw">new</span> VBox(<span class="num">12</span>, header, userField, passField, adminBtn);  <span class="cmt">// VBOX — vertical</span>
+    HBox cardsBox = <span class="kw">new</span> HBox(<span class="num">35</span>, adminCard, guestCard);                   <span class="cmt">// HBOX — horizontal</span>
+    StackPane root = <span class="kw">new</span> StackPane(content);                              <span class="cmt">// STACKPANE — layers</span>
+
+    <span class="cmt">// Create scene and show</span>
+    Scene scene = <span class="kw">new</span> Scene(root, <span class="num">720</span>, <span class="num">480</span>);                             <span class="cmt">// SCENE with size</span>
+    scene.getStylesheets().add(<span class="str">"styles.css"</span>);                               <span class="cmt">// Apply CSS</span>
+    primaryStage.setScene(scene);                                          <span class="cmt">// Set on STAGE</span>
+}</pre>
+
+<h3>10.4 Admin Panel</h3>
+<pre><span class="kw">private void</span> showAdminPanel() {
+    <span class="cmt">// TABLE VIEW — displays rooms in a table</span>
+    TableView&lt;Room&gt; table = <span class="kw">new</span> TableView&lt;&gt;();
+
+    <span class="cmt">// Create columns — each one extracts data from a Room object</span>
+    TableColumn&lt;Room, String&gt; colNum = <span class="kw">new</span> TableColumn&lt;&gt;(<span class="str">"Room #"</span>);
+    colNum.setCellValueFactory(c ->
+        <span class="kw">new</span> SimpleStringProperty(String.valueOf(c.getValue().getRoomNumber())));
+
+    <span class="cmt">// COMBO BOX — dropdown for filtering</span>
+    ComboBox&lt;String&gt; filter = <span class="kw">new</span> ComboBox&lt;&gt;();
+    filter.setOnAction(e -> refreshTable.run());  <span class="cmt">// setOnAction + Lambda</span>
+
+    <span class="cmt">// GRID PANE — form layout for Add Room / Checkout</span>
+    GridPane formGrid = <span class="kw">new</span> GridPane();
+    formGrid.add(addLabel, <span class="num">0</span>, <span class="num">0</span>);     <span class="cmt">// column 0, row 0</span>
+    formGrid.add(roomNumField, <span class="num">1</span>, <span class="num">0</span>); <span class="cmt">// column 1, row 0</span>
+    formGrid.add(typeCombo, <span class="num">2</span>, <span class="num">0</span>);    <span class="cmt">// column 2, row 0</span>
+    formGrid.add(addBtn, <span class="num">3</span>, <span class="num">0</span>);       <span class="cmt">// column 3, row 0</span>
+}</pre>
+
+<h3>10.5 Guest Panel &mdash; Booking with Background Thread</h3>
+<pre><span class="cmt">// When the "Book Room" button is clicked:</span>
+bookBtn.setOnAction(e -> {
+    statusLabel.setText(<span class="str">"Processing booking..."</span>);
+
+    <span class="cmt">// Create a NEW THREAD for booking (doesn't freeze the UI)</span>
+    Thread bookThread = <span class="kw">new</span> Thread(() -> {
+        Thread.sleep(<span class="num">800</span>);                         <span class="cmt">// Simulate processing time</span>
+        String result = hotel.bookRoom(...);
+
+        <span class="cmt">// PLATFORM.runLater — update UI from background thread (required in JavaFX)</span>
+        Platform.runLater(() -> {
+            showAlert(INFORMATION, <span class="str">"Booking"</span>, result);
+            refreshTable.run();
+        });
+    });
+    bookThread.setDaemon(<span class="kw">true</span>);
+    bookThread.start();
+});</pre>
+
+<h3>10.6 Billing Dialog &mdash; FXML Loading</h3>
+<pre><span class="kw">private void</span> showBillingDialog(Bill bill) {
+    <span class="kw">try</span> {
+        <span class="cmt">// FXML LOADER — loads the billing.fxml layout file (Scene Builder)</span>
+        Parent fxmlRoot = FXMLLoader.load(getClass().getResource(<span class="str">"billing.fxml"</span>));
+
+        <span class="cmt">// Find labels in the FXML and set their text</span>
+        ((Label) fxmlRoot.lookup(<span class="str">"#billTotal"</span>)).setText(<span class="str">"Rs. 5600.00"</span>);
+
+        <span class="cmt">// Show in a Dialog</span>
+        Dialog&lt;Void&gt; dialog = <span class="kw">new</span> Dialog&lt;&gt;();
+        dialog.getDialogPane().setContent(fxmlRoot);
+        dialog.showAndWait();
+    } <span class="kw">catch</span> (Exception ex) {
+        <span class="cmt">// If FXML fails, show a programmatic fallback (GridPane-based)</span>
+        showBillingFallback(bill);
+    }
+}</pre>
+
+<!-- ============================== HOW IT ALL CONNECTS ============================== -->
+<h2>11. How It All Connects</h2>
+
+<div class="flow" style="text-align: center; line-height: 2.2;">
+    <span class="step">User clicks "Login"</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">showAdminPanel() or showGuestPanel()</span><br>
+    <span class="arrow">&darr;</span><br>
+    <span class="step">User clicks "Book Room"</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">New Thread created</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">hotel.bookRoom() called</span><br>
+    <span class="arrow">&darr;</span><br>
+    <span class="step">Room.bookRoom() updates fields</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">phoneToRoom.put() stores mapping</span><br>
+    <span class="arrow">&darr;</span><br>
+    <span class="step">FileManager.saveData() writes to hotel_data.dat</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">FileManager.appendLog() writes to hotel_log.txt</span><br>
+    <span class="arrow">&darr;</span><br>
+    <span class="step">Platform.runLater() updates the UI</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Table refreshes, alert shown</span>
+</div>
+
+<hr class="divider">
+
+<p style="text-align: center; color: #78909c; font-size: 13px; margin-top: 30px;">
+    Hotel Manipal &mdash; JavaFX Hotel Management System &bull; OSDL Project
+</p>
+
+</div>
+</body>
+</html>

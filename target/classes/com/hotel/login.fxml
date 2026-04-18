@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- StackPane root — demonstrates StackPane usage -->
+<StackPane xmlns:fx="http://javafx.com/fxml/1"
+           prefWidth="660" prefHeight="460"
+           styleClass="login-root">
+
+    <VBox alignment="CENTER" spacing="25">
+        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+        <!-- Title -->
+        <Label text="HOTEL MANIPAL" styleClass="title-label"/>
+        <Label text="Management System" style="-fx-font-size: 14; -fx-text-fill: #546e7a;"/>
+
+        <HBox alignment="CENTER" spacing="30">
+
+            <!-- Admin Login Section -->
+            <VBox alignment="CENTER" spacing="10" styleClass="admin-section">
+                <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+                <Label text="Admin Login" styleClass="section-header"/>
+
+                <TextField fx:id="adminUsername" promptText="Username" maxWidth="220"/>
+                <PasswordField fx:id="adminPassword" promptText="Password" maxWidth="220"/>
+                <Button fx:id="adminLoginBtn" text="Login as Admin" styleClass="primary-btn"/>
+            </VBox>
+
+            <!-- Guest Login Section -->
+            <VBox alignment="CENTER" spacing="10" styleClass="guest-section">
+                <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+                <Label text="Guest Login" styleClass="section-header"/>
+
+                <TextField fx:id="guestName" promptText="Your Name" maxWidth="220"/>
+                <TextField fx:id="guestPhone" promptText="Phone Number" maxWidth="220"/>
+                <Button fx:id="guestLoginBtn" text="Login as Guest" styleClass="success-btn"/>
+            </VBox>
+
+        </HBox>
+    </VBox>
+</StackPane>

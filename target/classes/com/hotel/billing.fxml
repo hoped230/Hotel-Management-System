@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<!-- Billing Dialog Content — GridPane layout -->
+<GridPane
+    xmlns:fx="http://javafx.com/fxml/1"
+    hgap="20"
+    vgap="12"
+    styleClass="billing-root"
+    alignment="CENTER"
+>
+
+    <padding><Insets top="25" right="30" bottom="25" left="30" /></padding>
+
+    <!-- Title -->
+    <Label
+        text="BILL - Hotel Oasis"
+        styleClass="title-label"
+        GridPane.columnSpan="2"
+        GridPane.rowIndex="0"
+        GridPane.columnIndex="0"
+    />
+
+    <!-- Bill Details -->
+    <Label
+        text="Room Number:"
+        styleClass="bill-label"
+        GridPane.rowIndex="1"
+        GridPane.columnIndex="0"
+    />
+    <Label
+        fx:id="billRoomNumber"
+        styleClass="bill-value"
+        GridPane.rowIndex="1"
+        GridPane.columnIndex="1"
+    />
+
+    <Label
+        text="Category:"
+        styleClass="bill-label"
+        GridPane.rowIndex="2"
+        GridPane.columnIndex="0"
+    />
+    <Label
+        fx:id="billCategory"
+        styleClass="bill-value"
+        GridPane.rowIndex="2"
+        GridPane.columnIndex="1"
+    />
+
+    <Label
+        text="Base Amount:"
+        styleClass="bill-label"
+        GridPane.rowIndex="3"
+        GridPane.columnIndex="0"
+    />
+    <Label
+        fx:id="billBase"
+        styleClass="bill-value"
+        GridPane.rowIndex="3"
+        GridPane.columnIndex="1"
+    />
+
+    <Label
+        text="Service Charge:"
+        styleClass="bill-label"
+        GridPane.rowIndex="4"
+        GridPane.columnIndex="0"
+    />
+    <Label
+        fx:id="billService"
+        styleClass="bill-value"
+        GridPane.rowIndex="4"
+        GridPane.columnIndex="1"
+    />
+
+    <Label
+        text="Tax (12% GST):"
+        styleClass="bill-label"
+        GridPane.rowIndex="5"
+        GridPane.columnIndex="0"
+    />
+    <Label
+        fx:id="billTax"
+        styleClass="bill-value"
+        GridPane.rowIndex="5"
+        GridPane.columnIndex="1"
+    />
+
+    <!-- Separator line -->
+    <Separator
+        GridPane.columnSpan="2"
+        GridPane.rowIndex="6"
+        GridPane.columnIndex="0"
+    />
+
+    <!-- Total -->
+    <Label
+        text="TOTAL:"
+        styleClass="bill-total"
+        GridPane.rowIndex="7"
+        GridPane.columnIndex="0"
+    />
+    <Label
+        fx:id="billTotal"
+        styleClass="bill-total"
+        GridPane.rowIndex="7"
+        GridPane.columnIndex="1"
+    />
+
+</GridPane>
