@@ -2,10 +2,6 @@
 # Hotel-Management-System
 JavaFX Practice Project
 
-# Hotel Management
-
-JavaFX hotel management project
-
 ## Run
 
 ```bash
