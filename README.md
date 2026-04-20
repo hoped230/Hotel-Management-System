@@ -4,7 +4,7 @@ JavaFX Practice Project
 
 # Hotel Management
 
-JavaFX hotel management project aligned to Weeks 1 to 9 of the pasted manual.
+JavaFX hotel management project
 
 ## Run
 
